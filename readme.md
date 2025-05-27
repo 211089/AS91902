@@ -13,7 +13,7 @@ If you get a script error in PowerShell then run:
 
 `npm install express`
 
-`npm install i sqlite3`
+`npm install ejs`
 
 ## How to run
 `node app.js`
