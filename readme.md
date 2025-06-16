@@ -15,5 +15,7 @@ If you get a script error in PowerShell then run:
 
 `npm install ejs`
 
+`npm install express-ejs-layouts`
+
 ## How to run
 `node app.js`
