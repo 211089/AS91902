@@ -3,6 +3,7 @@ const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const { title } = require('process');
 const sqlite3 = require('sqlite3').verbose();
 let sql; 
 
@@ -13,13 +14,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-//Html connection
-app.get('/', (req,res) => {
-    res.render('index.ejs', { title: 'Home'});
-});
+//Static files
+app.use(express.static('public'));
+
 
 //Set template engine
 app.use(expressLayouts);
+app.set('layouts', './layout');
 app.set('view engine', 'ejs');
 
 // Database connection
@@ -31,13 +32,15 @@ const db = new sqlite3.Database('./test.db', (err) => {
     }
 });
 
+// Ejs page and query setup
+app.get('/', (req, res) => {    
+    db.all('SELECT * FROM students;',(err,results) => {
+        if(err) throw err;
+        res.render('index', { students: results, title: 'Home' });
+    }) 
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-// Creation of queries
-/*db.query('SELECT * FROM students',(err,results,fields) => {
-    if(err)throw err;
-    console.log(results);
-}) */
