@@ -33,12 +33,14 @@ const db = new sqlite3.Database('./test.db', (err) => {
 });
 
 // Ejs page and query setup
-app.get('/', (req, res) => {    
-    db.all('SELECT * FROM students;',(err,results) => {
-        if(err) throw err;
-        res.render('index', { students: results, title: 'Home' });
-    }) 
-});
+// app.get('/', (req, res) => {    
+//     db.all('SELECT * FROM students;',(err,results) => {
+//         if(err) throw err;
+//         res.render('index', { students: results, title: 'Home' });
+//     }) 
+// });
+
+app.use('/', require('./routes/student'));
 
 // Start the server
 app.listen(PORT, () => {
